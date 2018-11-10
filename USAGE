@@ -1,0 +1,12 @@
+binvoice, bv
+
+Usage:
+  binvoice <files>
+  binvoice <files> --output=<path>
+  binvoice --help
+  binvoice --version
+
+Options:
+  -h, --help       Show this screen.
+  -v, --version    Print the current version.
+  -o, --output     Define the output directory (default is CWD).

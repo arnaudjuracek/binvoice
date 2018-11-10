@@ -1,0 +1,13 @@
+{
+  "pdf": {
+    "documentation": "https://github.com/marcbachmann/node-html-pdf/#options",
+    "format": "A4",
+    "border": "1.5cm",
+    "footer": {
+      "height": "1.5cm",
+      "contents": {
+        "default": "<div class=\"pagination\"><span>{{page}}</span>/<span>{{pages}}</span></div>"
+      }
+    }
+  }
+}
