@@ -13,5 +13,6 @@ configuration.appname = appname
 configuration.package = pckg
 configuration.help = configuration.help || configuration.h
 configuration.version = configuration.version || configuration.v
+configuration.output = configuration.output || configuration.o
 
 module.exports = configuration
