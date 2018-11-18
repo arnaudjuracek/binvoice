@@ -1,6 +1,6 @@
 {
   "name": "binvoice",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "personnal cli invoices renderer",
   "author": "Arnaud Juracek <arnaud.juracek@gmail.com> (https://github.com/arnaudjuracek)",
   "license": "MIT",
