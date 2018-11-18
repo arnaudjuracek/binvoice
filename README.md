@@ -18,9 +18,28 @@
 - all informations are stored in the various YAML files : no overriding is allowed.
 
 ## Usage
+```
+binvoice, bv
+
+Usage:
+  binvoice <files>
+  binvoice <files> --output=<path>
+  binvoice --help
+  binvoice --version
+
+Options:
+  -h, --help       Show this screen.
+  -v, --version    Print the current version.
+  -o, --output     Define the output directory (default is CWD).
+
+```
+<sup>See [`.apprc`](.apprc) and the [`rc` package](https://github.com/dominictarr/rc#standards) for advanced options.</sup>
+
+### Using bash
 ```sh
 $ binvoice invoices/YYYYMMDD-client-1.yml
-$ binvoice invoices/*
+$ binvoice /Users/USERNAME/invoices/*
+$ binvoice *.yml
 $ binvoice $(ls -t *.yml | head -1)
 ```
 
