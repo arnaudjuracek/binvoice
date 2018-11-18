@@ -1,6 +1,5 @@
-# `$ binvoice`
-
-**As `binvoice`'s goal is to simplify my particular workflow, `binvoice` will stay in a private repository.**
+# `$ binvoice` <img src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/apple/155/banknote-with-euro-sign_1f4b6.png" width="100" align="right">
+**Personnal cli YAML to PDF invoices renderer**
 
 <br>
 
@@ -14,6 +13,7 @@
 ## Features
 - macOs `Work in Progress` tag to mark unpaid invoices.
 - `!ref <path>` to include a reference to another YAML file.
+- `!calc` to eval JS calc w/ `sum` defined as the sum of previous items price.
 - [`handlebars`](https://github.com/wycats/handlebars.js/) templating.
 - all informations are stored in the various YAML files : no overriding is allowed.
 
