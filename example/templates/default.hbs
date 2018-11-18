@@ -1,0 +1,264 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <style type="text/css">
+    ul { margin: 0; padding: 0; list-style: none; }
+    ul .ul-separator { height: 1em }
+
+    body {
+      /* NOTE: using local font file because phantomjs has trouble loading external fonts */
+      font-family: 'Open Sans', serif;
+      padding: 0;
+      font-size: 8pt;
+    }
+
+    main:not(:last-of-type) {
+      display: block;
+      page-break-after: always;
+    }
+
+    .header {
+      position: relative;
+      border-bottom: 1px solid blue;
+      padding-bottom: 0.75cm;
+      margin-bottom: 0.75cm;
+    }
+    .header--title {
+      margin-top: 0;
+      font-size: 14pt;
+      text-transform: uppercase;
+    }
+    .header--infos {}
+    .header--infos-item {}
+    .header--infos-item[data-label]::before {
+      content: attr(data-label);
+      font-weight: bold;
+      display: inline-block;
+      width: 6ch;
+      text-transform: uppercase;
+    }
+    .header--contact {
+      font-size: smaller;
+      position: absolute;
+      left: 66.666%;
+      bottom: 0.75cm;
+    }
+    .header--contact-item {}
+
+    .invoice {}
+    .invoice--header {
+      position: relative;
+      margin-bottom: 1.5cm;
+    }
+    .invoice--header-description {}
+    .invoice--header-description-title {
+      font-size: 10pt;
+      text-transform: uppercase;
+    }
+    .invoice--header-description-date {}
+    .invoice--header-destination {
+      position: absolute;
+      left: 66.666%;
+      bottom: 0;
+    }
+    .invoice--header-destination-item {}
+
+    .invoice--table {
+      width: 100%;
+      font-size: 1em;
+      border-collapse: collapse;
+    }
+    .invoice--table tr td:first-child {
+      padding-right: 1.5cm
+    }
+    .invoice--table td:last-child {
+      text-align: right;
+    }
+    .invoice--table thead {
+      font-weight: bold;
+      text-transform: lowercase;
+      border-bottom: 1px solid blue;
+    }
+    .invoice--table thead td {
+      padding: 1em 0;
+    }
+    .invoice--table tbody tr:first-child td {
+      padding-top: 1em;
+    }
+    .invoice--table td {
+      padding-bottom: 1em;
+      vertical-align: top;
+    }
+    .invoice--table .cell-title {
+      margin-bottom: 1em;
+      text-transform: uppercase;
+      font-weight: bold;
+    }
+    .invoice--table .cell-description {
+      font-size: smaller;
+      font-style: italic;
+      color: #555;
+    }
+    .invoice--table tbody tr:last-of-type td {
+      border-bottom: 1px solid blue;
+    }
+    .invoice--table tfoot td {
+      padding-top: 1em;
+    }
+    .invoice--table tfoot .cell-title {
+      margin-bottom: 0;
+      text-transform: lowercase;
+    }
+
+    .footer {
+      margin-top: 0.75cm;
+      font-size: smaller;
+    }
+    .footer--bank {}
+    .footer--bank-title {
+      font-size: 10pt;
+      text-transform: uppercase;
+      margin-bottom: 0.75cm;
+    }
+    .footer--bank-infos {}
+    .footer--bank-infos-item-name {
+      text-transform: uppercase;
+      font-weight: bold;
+    }
+    .footer--bank-infos-item[data-label]::before {
+      content: attr(data-label);
+      font-weight: bold;
+      display: inline-block;
+      width: 6ch;
+      text-transform: uppercase;
+    }
+    .footer--bank-infos-item.domiciliation[data-label]::before {
+      margin-right: 1ch;
+      width: auto;
+    }
+
+    .legals {}
+    .legals--title {
+      font-size: 10pt;
+      text-transform: uppercase;
+      margin-bottom: 0.75cm;
+    }
+    .legals--items {
+      column-count: 2;
+      padding: 0;
+      list-style-position: inside;
+      font-size: 6pt;
+    }
+    .legals--items-item {
+      margin-bottom: 1em;
+    }
+
+    .pagination {
+      text-align: right;
+      font-size: smaller;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header class="header" id="pageHeader">
+      <h1 class="header--title">{{account.title}}</h1>
+      <ul class="header--infos">
+        {{#each account.infos}}
+        <li class="header--infos-item" data-label="{{@key}}">{{this}}</li>
+        {{/each}}
+      </ul>
+      <ul class="header--contact">
+        <li class="header--contact-item">{{account.address.street}}</li>
+        <li class="header--contact-item">{{account.address.zip}}&nbsp;{{account.address.city}}&thinsp;&bull;&thinsp;{{account.address.state}}</li>
+        <li class="header--contact-item ul-separator"/>
+        <li class="header--contact-item">{{account.phone}}</li>
+        <li class="header--contact-item">{{account.email}}</li>
+      </ul>
+    </header>
+
+    <section class="invoice">
+      <header class="invoice--header">
+        <div class="invoice--header-description">
+          <h2 class="invoice--header-description-title">Note d'auteur #{{uid}}</h2>
+          <div class="invoice--header-description-date">Paris, {{date.human}}</div>
+        </div>
+        <ul class="invoice--header-destination">
+          <li class="invoice--header-destination-item"><b>{{client.title}}</b></li>
+          <li class="invoice--header-destination-item">{{client.phone}}</li>
+          <li class="invoice--header-destination-item">{{client.email}}</li>
+        </ul>
+      </header>
+
+      <table class="invoice--table">
+        <thead>
+          <tr>
+            <td>conception, réalisation et production d'&oelig;uvres graphiques originales</td>
+            <td>prix</td>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each items}}
+          <tr>
+            <td>
+              <div class="cell-title">{{this.title}}</div>
+              <div class="cell-description">{{this.description}}</div>
+            </td>
+            <td>{{{number this.price}}}</td>
+          </tr>
+          {{/each}}
+        </tbody>
+        <tfoot>
+          <tr>
+            <td>
+              <div class="cell-title">total net à payer</div>
+              <div class="cell-description">Régime micro BNC &mdash; TVA non applicable art. 293B du CGI</div>
+            </td>
+            <td><b>{{{number total.raw}}}&nbsp;&euro;</b></td>
+          </tr>
+        </tfoot>
+      </table>
+
+      <footer class="footer">
+        <p>
+          Arrête la présente note d'auteur à la somme de <b>{{total.human}}</b>.<br/>
+          Paiement à la réception par chèque ou virement bancaire à compter du <b>{{date.human}}</b>.
+        </p>
+        <p>Le règlement de la présente note d'auteur est à effectuer dans un délai maximum de <b>30 jours</b>. Pénalités de retard en cas de dépassement de délai de paiement.</p>
+        <p>
+          Entreprise Individuelle &mdash; SIREN {{account.siren}}.<br/>
+          Dispensé d'immatriculation au registre du commerce et des sociétés (RCS) et au répertoire des métiers (RM).
+        </p>
+      </footer>
+
+    </section>
+  </main>
+
+  <main>
+    <section class="legals">
+      <h1 class="legals--title">Condition générales de vente</h1>
+      <ol class="legals--items">
+        <li class="legals--items-item">La prestation de mise en &oelig;uvre comprend tout ce qui est explicitement listé dans le descriptif de l'&oelig;uvre. De façon corollaire, elle ne comprend pas ce qui n'est pas décrit dans ce même champ.</li>
+        <li class="legals--items-item">Sauf délai de paiement supplémentaire convenu par accord entre les deux parties et figurant sur la facture, le paiement s'effectue au plus tard au 30e jour suivant la date de facturation (C. Com. art. L. 441-6, al. 2 modifié de la loi du 15 mai 2001). Tout retard de paiement pourra donner lieu à des pénalités de retard exigibles sans rappel, au taux de 10 % de la facture totale par mois de retard (lutte contre les retards de paiement/article 53 de la loi NRE), ainsi qu'à une indemnité forfaitaire de 40€ (C. Com. art. D441-5). Paiements par virement bancaire ou par chèque à l'ordre de &laquo;<b>{{account.title}}</b>&raquo;. Le diffuseur est tenu de verser en sus une contribution de 1% du montant HT de la rémunération à la Maison des artistes, 60 rue du Faubourg Poissonnière 75484 Paris cedex 10. Pas d'escompte en cas de paiement anticipé.</li>
+        <li class="legals--items-item"> Conformément au CPI (articles L. 121-1 à L. 121-9) ne seront cédés au client pour l'&oelig;uvre décrite que les droits patrimoniaux explicitement énoncés dans les conditions de cession, à l'exclusion de tout autre, et ce, dans les limites y figurant également. Il est rappelé que le droit moral d'une création (comprenant entre autres droit au respect de l'&oelig;uvre et droit au respect du nom) reste attaché à son auteur de manière perpétuelle et imprescriptible. Toute représentation ou reproduction intégrale ou partielle faite sans le consentement de l'auteur ou de ses ayants droit est illicite, et punie selon les lois relatives au délit de contrefaçon. Il en est de même pour la traduction, l'adaptation ou la transformation, l'arrangement ou la reproduction par un art ou un procédé quelconque (art. L. 122-4 du CPI).</li>
+        <li class="legals--items-item">La totalité de la production et des droits s'y rapportant, objet de la présente commande, demeure la propriété entière et exclusive de <b>{{account.title}}</b> tant que les factures émises par <b>{{account.title}}</b> ne sont pas payées en totalité par la société cliente, à concurrence du montant global de la commande et des avenants éventuels conclus en cours de prestation. De façon corollaire, la société cliente deviendra propriétaire de fait des droits cédés à compter du règlement final et soldant de toutes les factures émises par <b>{{account.title}}</b> dans le cadre de la commande.</li>
+        <li class="legals--items-item">La livraison éventuelle des sources ou fichiers de travail relatifs à la présente commande ne se fera qu'en cas de nécessité induite par la stricte exploitation de l'&oelig;uvre prévue dans les conditions de cession ou dans un avenant ultérieur.</li>
+        <li class="legals--items-item"><b>{{account.title}}</b> se réserve le droit de mentionner sa réalisation pour la société cliente comme référence et de citer des extraits textuels ou iconographiques des &oelig;uvres concernées dans le strict cadre de ses démarches de prospection commerciale, de communication externe et de publicité. Toute réserve au droit de publicité de <b>{{account.title}}</b> devra être notifiée et négociée avant la signature du devis et mentionnée sur la facture.</li>
+        <li class="legals--items-item">La société cliente assume pleine et entière responsabilité des choix réalisés en matière de contenus textuels et iconographiques figurant dans la réalisation livrée par <b>{{account.title}}</b>, tout comme de l'exploitation qui en sera faite, et notamment de la conformité de cette dernière avec les réglementations en vigueur. Elle assure également être propriétaire des droits nécessaires à l'exploitation de tous les éléments créatifs textuels et iconographiques fournis par elle à <b>{{account.title}}</b> dans le cadre de sa mission, et garantit <b>{{account.title}}</b> contre toute plainte tierce relative à la violation des droits de ces éléments.</li>
+      </ol>
+    </section>
+    <footer class="footer">
+      <div class="footer--bank">
+        <h2 class="footer--bank-title">coordonnées bancaires</h2>
+        <ul class="footer--bank-infos">
+          <li class="footer--bank-infos-item-name">{{account.title}}</li>
+          {{#each account.rib}}
+          <li class="footer--bank-infos-item {{@key}}" data-label={{@key}}>{{this}}</li>
+          {{/each}}
+        </ul>
+      </div>
+    </footer>
+  </main>
+
+</body>
+</html>

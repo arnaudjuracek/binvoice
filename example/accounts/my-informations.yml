@@ -1,0 +1,17 @@
+title: John Doe
+phone: +33 0 00 00 00 00
+email: contact@example.com
+siren: 000 000 000
+address:
+  street: 00 streetname
+  zip: 00000
+  city: City
+  state: State
+infos:
+  mda: A000000
+  naf: 0000A
+  siret: 000 000 000 00000
+rib:
+  iban: AA00 0000 0000 0000 0000 0000 000
+  bic: AAAAAA00AAA
+  domiciliation: bank name and address

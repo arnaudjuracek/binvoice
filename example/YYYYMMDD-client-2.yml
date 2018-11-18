@@ -1,0 +1,23 @@
+---
+uid: 'YYYY-MM-DD'
+date: YYYY-MM-DD
+account: !ref accounts/my-informations.yml
+client: !ref clients/client-2.yml
+template: !ref templates/default.hbs
+
+# This is a comment
+items:
+  -
+    title: >
+      Title of the first item
+    description:
+      - First line of description for the first item
+      - Second line of description for the first item
+    price: 1200
+  -
+    # This is a comment
+    title: >
+      Title of the second item
+    description:
+      - Description for the second item
+    price: 13.37

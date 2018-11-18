@@ -1,0 +1,10 @@
+---
+title: Client 1
+phone: +33 0 00 00 00 00
+email: contact@example.com
+siret: 000 000 000 00000
+address:
+  street: 00 streetname
+  zip: 00000
+  city: City
+  state: State
