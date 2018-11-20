@@ -5,7 +5,12 @@ const chalk = require('chalk')
 const configuration = require('@configuration')
 const fs = require('fs')
 const path = require('path')
+const render = require('@lib/render')
+const spinners = require('@bin/spinners')(require('cli-spinners').dots)
+
 const _ = configuration._
+const files = _.filter(require('@utils/file-is-yaml'))
+const porcelain = configuration.porcelain || !process.stdout.isTTY
 
 // Show help
 if (_.includes('help') || configuration.help) {
@@ -19,16 +24,13 @@ if (_.includes('version') || configuration.version) {
   process.exit(0)
 }
 
-const render = require('@lib/render')
-const spinners = require('@bin/spinners')(require('cli-spinners').dots)
-const files = _.filter(require('@utils/file-is-yaml'))
-
+// Reject when no files
 if (!files.length) {
-  console.log(chalk.red('✖ error:'), 'No matching file given. Try running binvoice against YAML files.')
+  console.error(chalk.red('✖ error:'), 'No matching file given. Try running binvoice against YAML files.')
   process.exit(1)
 }
 
-Promise.all(files.map(async file => {
+async function renderAndSpin (file) {
   const spinner = spinners.add(file)
   try {
     const output = await render(file)
@@ -36,10 +38,15 @@ Promise.all(files.map(async file => {
   } catch (error) {
     spinner.error(error.message)
   }
-}))
-  .then(spinners.done)
+}
+
+Promise.all(files.map(porcelain ? render : renderAndSpin))
+  .then(result => {
+    spinners.done()
+    if (porcelain) console.log(result.map(r => r.filename).join('\n'))
+  })
   .catch(error => {
     spinners.done()
-    console.log(error)
+    console.error(error)
     process.exit(1)
   })

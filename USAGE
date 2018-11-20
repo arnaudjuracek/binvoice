@@ -3,6 +3,7 @@ binvoice, bv
 Usage:
   binvoice <files>
   binvoice <files> --output=<path>
+  open $(binvoice <files> --porcelain)
   binvoice --help
   binvoice --version
 
@@ -10,3 +11,4 @@ Options:
   -h, --help       Show this screen.
   -v, --version    Print the current version.
   -o, --output     Define the output directory (default is CWD).
+  --porcelain      Make sure the output is parsable.
