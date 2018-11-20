@@ -3,7 +3,6 @@ binvoice, bv
 Usage:
   binvoice <files>
   binvoice <files> --output=<path>
-  open $(binvoice <files> --porcelain)
   binvoice --help
   binvoice --version
 

@@ -31,6 +31,7 @@ Options:
   -h, --help       Show this screen.
   -v, --version    Print the current version.
   -o, --output     Define the output directory (default is CWD).
+  --porcelain      Make sure the output is parsable.
 
 ```
 <sup>See [`.apprc`](.apprc) and the [`rc` package](https://github.com/dominictarr/rc#standards) for advanced options.</sup>
@@ -41,6 +42,7 @@ $ binvoice invoices/YYYYMMDD-client-1.yml
 $ binvoice /Users/USERNAME/invoices/*
 $ binvoice *.yml
 $ binvoice $(ls -t *.yml | head -1)
+$ open $(binvoice <files> --porcelain)
 ```
 
 ## Example
